@@ -434,7 +434,7 @@ class Tomarket:
 
     def set_queries(self):
         try:
-            with open('query.txt', 'r') as file:
+            with open('query.txt', 'r', encoding='utf-8') as file:
                 queries = file.readlines()
 
             if len(queries) == 0:
@@ -443,7 +443,7 @@ class Tomarket:
                 
                 if os.path.exists('data.json'):
                     try:
-                        with open('data.json', 'r') as data_file:
+                        with open('data.json', 'r', encoding='utf-8') as data_file:
                             accounts = json.load(data_file)
                             
                         if len(accounts) == 0:
@@ -469,7 +469,7 @@ class Tomarket:
 
             if os.path.exists('data.json'):
                 try:
-                    with open('data.json', 'r') as data_file:
+                    with open('data.json', 'r', encoding='utf-8') as data_file:
                         accounts = json.load(data_file) 
 
                 except json.JSONDecodeError as e:
@@ -520,7 +520,7 @@ class Tomarket:
                                         'token': token,
                                         'query': account['query']
                                     }
-                                    with open('data.json', 'w') as data_file:
+                                    with open('data.json', 'w', encoding='utf-8') as data_file:
                                         json.dump(accounts, data_file, indent=4)
                                     self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Updated Account Token ]{Style.RESET_ALL}")
                                     print("\n")
@@ -536,7 +536,7 @@ class Tomarket:
                     exit(1)
 
 
-            with open('data.json', 'w') as data_file:
+            with open('data.json', 'w', encoding='utf-8') as data_file:
                 json.dump(accounts, data_file, indent=4)
 
         except Exception as e:
@@ -547,7 +547,7 @@ class Tomarket:
         self.welcome_msg()
         self.set_queries()
         try:
-            accounts = json.load(open('data.json', 'r'))
+            accounts = json.load(open('data.json', 'r', encoding='utf-8'))
 
             for account in accounts:
                 self.print_timestamp(f"{Fore.GREEN + Style.BRIGHT}[ '{account['name']}' account detected from data.json ]{Style.RESET_ALL}")
