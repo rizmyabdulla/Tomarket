@@ -1,0 +1,6 @@
+colorama
+fake-useragent
+pytz
+requests
+tzlocal
+tzdata
