@@ -558,9 +558,12 @@ class Tomarket:
         for account in accounts:
             print("\n")
             self.print_timestamp(f"{Fore.CYAN + Style.BRIGHT}[ Using '{account['name']}' account ]{Style.RESET_ALL}\n")
+            sleep(random.randint(2, 3))
 
             # Daily claim
             self.daily_claim(token=account['token'])
+
+            sleep(random.randint(2, 3))
 
             # User balance info
             balance = self.user_balance(token=account['token'])
@@ -569,6 +572,8 @@ class Tomarket:
                 f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
                 f"{Fore.CYAN + Style.BRIGHT}[ Play Passes - {balance['data']['play_passes']} ]{Style.RESET_ALL}"
             )
+
+            sleep(random.randint(2, 3))
 
             rank_info = self.rank_data(token=account['token'])
 
@@ -582,8 +587,12 @@ class Tomarket:
                 f"{Fore.CYAN + Style.BRIGHT}[ Unused Stars - {rank_info['data']['unusedStars']} ]{Style.RESET_ALL}"
             )
 
+            sleep(random.randint(2, 3))
+
             # Check free spins
             self.check_free_spins(token=account['token'], query=account['query'])
+
+            sleep(random.randint(2, 3))
 
             # Farming tasks
             local_tz = get_localzone()
@@ -600,21 +609,28 @@ class Tomarket:
                     self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Farm Can Claim At {timestamp_farm_end_at} ]{Style.RESET_ALL}")
             else:
                  self.farm_start(token=account['token'])
+            
+            sleep(random.randint(2, 3))
 
             # Playing passes
             while balance['data']['play_passes'] > 0:
                 self.game_play(token=account['token'])
                 balance['data']['play_passes'] -= 1
 
+            sleep(random.randint(2, 3))
+
             # Tasks
             self.tasks_list(token=account['token'])
 
-            
+            sleep(random.randint(2, 3))
+
+            # Rank
             rank_updated_info = self.rank_data(token=account['token'])
             unused_stars = rank_updated_info['data']['unusedStars']
 
             if unused_stars > 0:
                 self.print_timestamp(f"{Fore.GREEN + Style.BRIGHT}[ Upgrading Rank... ]{Style.RESET_ALL}")
+                sleep(random.randint(2, 3))
                 upgrade_level = self.rank_upgrade(token=account['token'], stars=unused_stars)
 
                 if upgrade_level['status'] == 0:
@@ -650,7 +666,8 @@ class Tomarket:
         print(f"{Fore.CYAN + Style.BRIGHT}[ Telegram Group : {Fore.MAGENTA + Style.BRIGHT}https://t.me/yk_daemon {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
         print(f"{Fore.CYAN + Style.BRIGHT}[ Youtube : {Fore.MAGENTA + Style.BRIGHT}https://youtube.com/@yk-daemon {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
         print(f"{Fore.CYAN + Style.BRIGHT}[ YesCoin Script : {Fore.MAGENTA + Style.BRIGHT}https://youtu.be/G_0KPU2p8ow {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
-        print(f"{Fore.CYAN + Style.BRIGHT}[ Script updated on : {Fore.MAGENTA + Style.BRIGHT}13 October 2024 {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
+        print(f"{Fore.CYAN + Style.BRIGHT}[ Script updated on : {Fore.MAGENTA + Style.BRIGHT}14 October 2024 {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
+        print(f"{Fore.CYAN + Style.BRIGHT}[ Change Log : {Fore.MAGENTA + Style.BRIGHT}Bug Fixed! {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
 
         sleep(2)
 
