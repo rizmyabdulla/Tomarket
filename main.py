@@ -269,6 +269,7 @@ class Tomarket:
         if 'status' in game_claim:
             if game_claim['status'] == 0:
                 self.print_timestamp(f"{Fore.GREEN + Style.BRIGHT}[ Game Claimed {game_claim['data']['points']} ]{Style.RESET_ALL}")
+                sleep(random.randint(2, 3))
             elif game_claim['status'] == 500 or game_claim['message'] == 'game not start':
                 self.print_timestamp(f"{Fore.MAGENTA + Style.BRIGHT}[ Game Not Started ]{Style.RESET_ALL}")
                 self.game_play(token=token)
@@ -295,6 +296,8 @@ class Tomarket:
 
         if 'data' in tasks_list and isinstance(tasks_list['data'], dict):
             for category, tasks in tasks_list['data'].items():
+                if category == 'chain_free':
+                    continue
                 if category == '3rd':
                     if isinstance(tasks, dict):
                         for task_id, tp_tasks_list in tasks.items():
@@ -312,6 +315,7 @@ class Tomarket:
                                     if start_task['status'] == 0:
                                         if start_task['data']['status'] == 1:
                                             self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Checking '{task['title']}' ]{Style.RESET_ALL}")
+                                            
                                             sleep(task['waitSecond'] + 3)
                                             self.tasks_check(token=token, task_id=task['taskId'])
                                         elif start_task['data']['status'] == 2:
@@ -337,7 +341,7 @@ class Tomarket:
                         if task['status'] == 0 and task['type'] == "mysterious":
                             self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Claiming '{task['title']}' ]{Style.RESET_ALL}")
                             self.tasks_claim(token=token, task_id=task['taskId'])
-                        elif task['status'] == 0:  # Ensure this checks all types
+                        elif task['status'] == 0 and task['name'] != 'Connect to Bitget wallet' and task['needVerify'] != True:
                             self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Starting '{task['title']}' ]{Style.RESET_ALL}")
                             start_task = self.tasks_start(token=token, task_id=task['taskId'])
                             if start_task['status'] == 0:
@@ -358,6 +362,8 @@ class Tomarket:
                         elif task['status'] == 2:
                             self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Claiming '{task['title']}' ]{Style.RESET_ALL}")
                             self.tasks_check(token=token, task_id=task['taskId'])
+                        elif task['status'] == 0 and task['needVerify'] == True:
+                            self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ You have to finish this task '{task['title']}' manually because this task need to be verified ]{Style.RESET_ALL}")
         else:
             self.print_timestamp(f"{Fore.RED + Style.BRIGHT}[ Error: 'data' not found or is not a dictionary ]{Style.RESET_ALL}")
 
@@ -481,16 +487,10 @@ class Tomarket:
             for index, query in enumerate(queries):
                 query = query.strip()
 
-                invite_codes = [
-                    "0000u8O2",
-                    "0000u6qY",
-                ]
-                
-                selected_invite_code = random.choice(invite_codes)
 
                 payload = {
                     "init_data": query,
-                    "invite_code": selected_invite_code,
+                    "invite_code": "0000u6qY",
                     "from": "",
                     "is_bot": False
                 }
@@ -637,7 +637,7 @@ class Tomarket:
                     self.print_timestamp(f"{Fore.GREEN + Style.BRIGHT}[ Rank Upgraded by {unused_stars} Stars ]{Style.RESET_ALL}")
 
             else:
-                self.print_timestamp(f"{Fore.YELLOW + Style.BRIGHT}[ Not Enough Stars to Upgrade Rank ]{Style.RESET_ALL}")
+                self.print_timestamp(f"{Fore.GREEN + Style.BRIGHT}[ Not Enough Stars to Upgrade Rank ]{Style.RESET_ALL}")
 
         print("\n")
         # Final message before restart
@@ -666,8 +666,9 @@ class Tomarket:
         print(f"{Fore.CYAN + Style.BRIGHT}[ Telegram Group : {Fore.MAGENTA + Style.BRIGHT}https://t.me/yk_daemon {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
         print(f"{Fore.CYAN + Style.BRIGHT}[ Youtube : {Fore.MAGENTA + Style.BRIGHT}https://youtube.com/@yk-daemon {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
         print(f"{Fore.CYAN + Style.BRIGHT}[ YesCoin Script : {Fore.MAGENTA + Style.BRIGHT}https://youtu.be/G_0KPU2p8ow {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
-        print(f"{Fore.CYAN + Style.BRIGHT}[ Script updated on : {Fore.MAGENTA + Style.BRIGHT}14 October 2024 {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
-        print(f"{Fore.CYAN + Style.BRIGHT}[ Change Log : {Fore.MAGENTA + Style.BRIGHT}Bug Fixed! {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
+        print("\n")
+        print(f"{Fore.CYAN + Style.BRIGHT}[ Script updated on : {Fore.MAGENTA + Style.BRIGHT}15 October 2024 {Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
+        print(f"{Fore.CYAN + Style.BRIGHT}[ Change Log : {Fore.MAGENTA + Style.BRIGHT}Tasks and gameplay Bug Fixed{Fore.CYAN + Style.BRIGHT}]{Style.RESET_ALL}")
 
         sleep(2)
 
